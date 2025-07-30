@@ -1,0 +1,265 @@
+<% layout('layout') %>
+<section class="container py-5">
+  <!-- Header Section -->
+  <div class="text-center mb-5">
+    <h1 class="display-4 fw-bold mb-3">Our Fleet</h1>
+    <p class="lead text-muted">Choose from our extensive collection of vehicles</p>
+  </div>
+
+  <!-- Search and Filter Section -->
+  <div class="row mb-5">
+    <div class="col-lg-8 mx-auto">
+      <div class="card shadow-sm">
+        <div class="card-body p-4">
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label for="carDropdown" class="form-label fw-bold">Search Cars</label>
+              <select id="carDropdown" class="form-select">
+                <option value="">All Cars</option>
+                <% cars.forEach(function(car) { %>
+                  <option value="<%= car.id %>" <% if (car.currentStock === 0) { %>disabled style="text-decoration: line-through; color: #888;"<% } %>>
+                    <%= car.brand %> <%= car.model %> <% if (car.currentStock === 0) { %>(Sold Out)<% } %>
+                  </option>
+                <% }); %>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label for="categoryFilter" class="form-label fw-bold">Category</label>
+              <select id="categoryFilter" class="form-select">
+                <option value="">All Categories</option>
+                <option value="Luxury">Luxury</option>
+                <option value="SUV">SUV</option>
+                <option value="Economy">Economy</option>
+                <option value="Electric">Electric</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label for="locationFilter" class="form-label fw-bold">Location</label>
+              <select id="locationFilter" class="form-select">
+                <option value="">All Locations</option>
+                <option value="London">London</option>
+                <option value="Manchester">Manchester</option>
+                <option value="Birmingham">Birmingham</option>
+                <option value="Liverpool">Liverpool</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <label for="priceFilter" class="form-label fw-bold">Price</label>
+              <select id="priceFilter" class="form-select">
+                <option value="">All Prices</option>
+                <option value="0-50">$0 - $50</option>
+                <option value="50-100">$50 - $100</option>
+                <option value="100-150">$100 - $150</option>
+                <option value="150+">$150+</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Results Counter -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <p class="mb-0 text-muted">
+      Showing <span id="resultsCount"><%= cars.length %></span> cars
+    </p>
+    <div class="btn-group" role="group">
+      <button type="button" class="btn btn-outline-primary active" data-view="grid">
+        <i class="bi bi-grid-3x3-gap"></i> Grid
+      </button>
+      <button type="button" class="btn btn-outline-primary" data-view="list">
+        <i class="bi bi-list"></i> List
+      </button>
+    </div>
+  </div>
+
+  <!-- Cars Grid -->
+  <div class="row g-4" id="carsGrid">
+    <% cars.forEach(function(car) { %>
+      <div class="col-lg-4 col-md-6 car-item" data-id="<%= car.id %>" data-brand="<%= car.brand.toLowerCase() %>" data-model="<%= car.model.toLowerCase() %>" data-category="<%= car.category %>" data-location="<%= car.location %>" data-price="<%= car.pricePerDay %>">
+        <div class="card h-100 car-card">
+          <div class="position-relative">
+            <img src="<%= car.image %>" class="card-img-top" alt="<%= car.brand %> <%= car.model %>" style="height: 220px; object-fit: cover;">
+            <div class="position-absolute top-0 end-0 m-3">
+              <% if (car.currentStock > 0) { %>
+                <span class="badge bg-success fs-6">
+                  <i class="bi bi-check-circle me-1"></i>Available
+                </span>
+              <% } else { %>
+                <span class="badge bg-danger fs-6">
+                  <i class="bi bi-x-circle me-1"></i>Out of Stock
+                </span>
+              <% } %>
+            </div>
+            <div class="position-absolute bottom-0 start-0 w-100 p-3" style="background: linear-gradient(transparent, rgba(0,0,0,0.7));">
+              <span class="badge bg-primary fs-6"><%= car.category %></span>
+            </div>
+          </div>
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title fw-bold mb-2"><%= car.brand %> <%= car.model %></h5>
+            <div class="row text-muted small mb-3">
+              <div class="col-6">
+                <i class="bi bi-calendar me-1"></i><%= car.year %>
+              </div>
+              <div class="col-6">
+                <i class="bi bi-gear me-1"></i><%= car.transmission %>
+              </div>
+              <div class="col-6">
+                <i class="bi bi-fuel-pump me-1"></i><%= car.fuel %>
+              </div>
+              <div class="col-6">
+                <i class="bi bi-geo-alt me-1"></i><%= car.location %>
+              </div>
+            </div>
+            <p class="card-text text-muted mb-3"><%= car.description %></p>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <span class="fs-4 fw-bold text-primary">$<%= car.pricePerDay %>/day</span>
+              <small class="text-muted">Available: <%= car.currentStock %> of <%= car.stock %></small>
+            </div>
+            <div class="mt-auto">
+              <div class="d-flex gap-2">
+                <a href="/cars/<%= car.id %>" class="btn btn-outline-primary flex-fill">
+                  <i class="bi bi-eye me-1"></i>View Details
+                </a>
+                <% if (car.currentStock > 0) { %>
+                  <a href="/booking?car=<%= car.id %>" class="btn btn-primary flex-fill">
+                    <i class="bi bi-calendar-check me-1"></i>Reserve
+                  </a>
+                <% } else { %>
+                  <button class="btn btn-secondary flex-fill" disabled>
+                    <i class="bi bi-x-circle me-1"></i>Unavailable
+                  </button>
+                <% } %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% }); %>
+  </div>
+
+  <!-- No Results Message -->
+  <div id="noResults" class="text-center py-5" style="display: none;">
+    <i class="bi bi-search display-1 text-muted mb-3"></i>
+    <h3 class="text-muted">No cars found</h3>
+    <p class="text-muted">Try adjusting your search criteria</p>
+  </div>
+</section>
+
+<style>
+.car-card {
+  transition: all 0.3s ease;
+  border: none;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.car-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.car-card .card-img-top {
+  transition: transform 0.3s ease;
+}
+
+.car-card:hover .card-img-top {
+  transform: scale(1.05);
+}
+
+.btn-group .btn {
+  border-radius: 8px;
+}
+
+.btn-group .btn.active {
+  background: #1976d2;
+  border-color: #1976d2;
+  color: white;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const carDropdown = document.getElementById('carDropdown');
+  carDropdown.addEventListener('change', function() {
+    const selectedId = this.value;
+    const carItems = document.querySelectorAll('.car-item');
+    carItems.forEach(function(item) {
+      if (!selectedId || item.getAttribute('data-id') === selectedId) {
+        item.style.display = '';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  });
+
+  const categoryFilter = document.getElementById('categoryFilter');
+  const locationFilter = document.getElementById('locationFilter');
+  const priceFilter = document.getElementById('priceFilter');
+  const carsGrid = document.getElementById('carsGrid');
+  const noResults = document.getElementById('noResults');
+  const resultsCount = document.getElementById('resultsCount');
+  const viewButtons = document.querySelectorAll('[data-view]');
+
+  function filterCars() {
+    const category = categoryFilter.value;
+    const location = locationFilter.value;
+    const priceRange = priceFilter.value;
+    const carItems = document.querySelectorAll('.car-item');
+    let visibleCount = 0;
+    carItems.forEach(item => {
+      const carCategory = item.dataset.category;
+      const carLocation = item.dataset.location;
+      const price = parseInt(item.dataset.price);
+      let show = true;
+      if (category && carCategory !== category) show = false;
+      if (location && carLocation !== location) show = false;
+      if (priceRange) {
+        const [min, max] = priceRange.split('-').map(p => p === '+' ? Infinity : parseInt(p));
+        if (price < min || (max !== Infinity && price > max)) show = false;
+      }
+      if (show) {
+        item.style.display = '';
+        visibleCount++;
+      } else {
+        item.style.display = 'none';
+      }
+    });
+    resultsCount.textContent = visibleCount;
+    if (visibleCount === 0) {
+      noResults.style.display = 'block';
+      carsGrid.style.display = 'none';
+    } else {
+      noResults.style.display = 'none';
+      carsGrid.style.display = '';
+    }
+  }
+  categoryFilter.addEventListener('change', filterCars);
+  locationFilter.addEventListener('change', filterCars);
+  priceFilter.addEventListener('change', filterCars);
+
+  // View toggle
+  viewButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      viewButtons.forEach(btn => btn.classList.remove('active'));
+      this.classList.add('active');
+      const view = this.dataset.view;
+      if (view === 'list') {
+        carsGrid.classList.add('row-cols-1');
+        carsGrid.classList.remove('g-4');
+        document.querySelectorAll('.car-item').forEach(item => {
+          item.classList.add('col-12');
+          item.classList.remove('col-lg-4', 'col-md-6');
+        });
+      } else {
+        carsGrid.classList.remove('row-cols-1');
+        carsGrid.classList.add('g-4');
+        document.querySelectorAll('.car-item').forEach(item => {
+          item.classList.remove('col-12');
+          item.classList.add('col-lg-4', 'col-md-6');
+        });
+      }
+    });
+  });
+});
+</script> 

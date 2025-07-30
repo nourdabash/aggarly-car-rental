@@ -1,0 +1,111 @@
+<% layout('layout') %>
+<section class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow-lg border-0">
+        <div class="card-body text-center p-5">
+          <!-- Error Icon -->
+          <div class="mb-4">
+            <% if (error.status === 403) { %>
+              <i class="bi bi-shield-exclamation text-danger" style="font-size: 4rem;"></i>
+            <% } else if (error.status === 404) { %>
+              <i class="bi bi-question-circle text-warning" style="font-size: 4rem;"></i>
+            <% } else { %>
+              <i class="bi bi-exclamation-triangle text-danger" style="font-size: 4rem;"></i>
+            <% } %>
+          </div>
+          
+          <!-- Error Title -->
+          <h1 class="display-4 fw-bold mb-3">
+            <% if (error.status === 403) { %>
+              Access Denied
+            <% } else if (error.status === 404) { %>
+              Page Not Found
+            <% } else { %>
+              Error <%= error.status %>
+            <% } %>
+          </h1>
+          
+          <!-- Error Message -->
+          <p class="lead text-muted mb-4">
+            <%= error.message %>
+          </p>
+          
+          <!-- Error Details -->
+          <% if (error.details) { %>
+            <div class="alert alert-info mb-4">
+              <i class="bi bi-info-circle me-2"></i>
+              <%= error.details %>
+            </div>
+          <% } %>
+          
+          <!-- Action Buttons -->
+          <div class="d-flex justify-content-center gap-3">
+            <% if (error.status === 403) { %>
+              <a href="/admin" class="btn btn-primary">
+                <i class="bi bi-gear me-2"></i>Go to Admin Panel
+              </a>
+              <a href="/" class="btn btn-outline-secondary">
+                <i class="bi bi-house me-2"></i>Go Home
+              </a>
+            <% } else if (error.status === 404) { %>
+              <a href="/" class="btn btn-primary">
+                <i class="bi bi-house me-2"></i>Go Home
+              </a>
+              <a href="/cars" class="btn btn-outline-primary">
+                <i class="bi bi-car-front me-2"></i>Browse Cars
+              </a>
+            <% } else { %>
+              <a href="/" class="btn btn-primary">
+                <i class="bi bi-house me-2"></i>Go Home
+              </a>
+              <a href="/contact" class="btn btn-outline-secondary">
+                <i class="bi bi-envelope me-2"></i>Contact Support
+              </a>
+            <% } %>
+          </div>
+          
+          <!-- Additional Help -->
+          <div class="mt-5">
+            <h6 class="fw-bold mb-3">Need Help?</h6>
+            <div class="row g-3">
+              <div class="col-md-4">
+                <a href="/help-center" class="text-decoration-none">
+                  <div class="card border-0 bg-light h-100">
+                    <div class="card-body text-center">
+                      <i class="bi bi-question-circle text-primary fs-3 mb-2"></i>
+                      <h6 class="fw-bold">Help Center</h6>
+                      <small class="text-muted">Find answers to common questions</small>
+                    </div>
+                  </div>
+                </a>
+              </div>
+              <div class="col-md-4">
+                <a href="/faq" class="text-decoration-none">
+                  <div class="card border-0 bg-light h-100">
+                    <div class="card-body text-center">
+                      <i class="bi bi-chat-dots text-primary fs-3 mb-2"></i>
+                      <h6 class="fw-bold">FAQ</h6>
+                      <small class="text-muted">Frequently asked questions</small>
+                    </div>
+                  </div>
+                </a>
+              </div>
+              <div class="col-md-4">
+                <a href="/contact" class="text-decoration-none">
+                  <div class="card border-0 bg-light h-100">
+                    <div class="card-body text-center">
+                      <i class="bi bi-envelope text-primary fs-3 mb-2"></i>
+                      <h6 class="fw-bold">Contact Us</h6>
+                      <small class="text-muted">Get in touch with our team</small>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> 

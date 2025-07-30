@@ -1,0 +1,269 @@
+<% layout('layout') %>
+<section class="container py-5">
+  <div class="row">
+    <div class="col-12">
+      <!-- Header -->
+      <div class="d-flex justify-content-between align-items-center mb-5">
+        <div>
+          <h1 class="display-4 fw-bold mb-2">Reports & Analytics</h1>
+          <p class="lead text-muted">Generate detailed reports and insights</p>
+        </div>
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-outline-primary" onclick="exportReport('pdf')">
+            <i class="bi bi-file-pdf me-2"></i>Export PDF
+          </button>
+          <button type="button" class="btn btn-outline-primary" onclick="exportReport('excel')">
+            <i class="bi bi-file-excel me-2"></i>Export Excel
+          </button>
+        </div>
+      </div>
+
+      <!-- Report Filters -->
+      <div class="card shadow-sm mb-5">
+        <div class="card-body">
+          <h5 class="card-title mb-3">Report Filters</h5>
+          <div class="row g-3">
+            <div class="col-md-3">
+              <label class="form-label">Date Range</label>
+              <select class="form-select" id="dateRange">
+                <option value="7">Last 7 days</option>
+                <option value="30" selected>Last 30 days</option>
+                <option value="90">Last 90 days</option>
+                <option value="365">Last year</option>
+                <option value="custom">Custom range</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Report Type</label>
+              <select class="form-select" id="reportType">
+                <option value="bookings">Booking Reports</option>
+                <option value="revenue">Revenue Reports</option>
+                <option value="vehicles">Vehicle Reports</option>
+                <option value="users">User Reports</option>
+                <option value="locations">Location Reports</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Status</label>
+              <select class="form-select" id="statusFilter">
+                <option value="all">All Status</option>
+                <option value="confirmed">Confirmed</option>
+                <option value="pending">Pending</option>
+                <option value="cancelled">Cancelled</option>
+                <option value="completed">Completed</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Location</label>
+              <select class="form-select" id="locationFilter">
+                <option value="all">All Locations</option>
+                <option value="London">London</option>
+                <option value="Manchester">Manchester</option>
+                <option value="Birmingham">Birmingham</option>
+                <option value="Liverpool">Liverpool</option>
+              </select>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-12">
+              <button class="btn btn-primary" onclick="generateReport()">
+                <i class="bi bi-search me-2"></i>Generate Report
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Report Content -->
+      <div class="row g-4">
+        <!-- Summary Cards -->
+        <div class="col-12">
+          <div class="row g-4 mb-4">
+            <div class="col-lg-3 col-md-6">
+              <div class="card shadow-sm">
+                <div class="card-body text-center">
+                  <i class="bi bi-calendar-check text-primary fs-1 mb-3"></i>
+                  <h4 class="mb-1"><%= totalBookings %></h4>
+                  <p class="text-muted mb-0">Total Bookings</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="card shadow-sm">
+                <div class="card-body text-center">
+                  <i class="bi bi-currency-dollar text-success fs-1 mb-3"></i>
+                  <h4 class="mb-1">$<%= totalRevenue.toLocaleString() %></h4>
+                  <p class="text-muted mb-0">Total Revenue</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="card shadow-sm">
+                <div class="card-body text-center">
+                  <i class="bi bi-car-front text-info fs-1 mb-3"></i>
+                  <h4 class="mb-1"><%= activeVehicles %></h4>
+                  <p class="text-muted mb-0">Active Vehicles</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="card shadow-sm">
+                <div class="card-body text-center">
+                  <i class="bi bi-people text-warning fs-1 mb-3"></i>
+                  <h4 class="mb-1"><%= totalUsers %></h4>
+                  <p class="text-muted mb-0">Total Users</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Detailed Reports -->
+        <div class="col-lg-8">
+          <div class="card shadow-sm">
+            <div class="card-header bg-transparent">
+              <h5 class="mb-0">Booking Trends</h5>
+            </div>
+            <div class="card-body">
+              <canvas id="bookingTrendsChart" height="300"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="card shadow-sm">
+            <div class="card-header bg-transparent">
+              <h5 class="mb-0">Revenue Breakdown</h5>
+            </div>
+            <div class="card-body">
+              <canvas id="revenueChart" height="300"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Detailed Table -->
+        <div class="col-12">
+          <div class="card shadow-sm">
+            <div class="card-header bg-transparent">
+              <h5 class="mb-0">Detailed Report Data</h5>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-hover" id="reportTable">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Booking ID</th>
+                      <th>Customer</th>
+                      <th>Vehicle</th>
+                      <th>Location</th>
+                      <th>Duration</th>
+                      <th>Amount</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% reportData.forEach(function(booking) { %>
+                      <tr>
+                        <td><%= new Date(booking.date).toLocaleDateString() %></td>
+                        <td><%= booking.id %></td>
+                        <td><%= booking.customer %></td>
+                        <td><%= booking.vehicle %></td>
+                        <td><%= booking.location %></td>
+                        <td><%= booking.duration %> days</td>
+                        <td>$<%= booking.amount %></td>
+                        <td>
+                          <span class="badge bg-<%= booking.status === 'confirmed' ? 'success' : booking.status === 'pending' ? 'warning' : booking.status === 'cancelled' ? 'danger' : 'secondary' %>">
+                            <%= booking.status %>
+                          </span>
+                        </td>
+                      </tr>
+                    <% }); %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Booking Trends Chart
+  const bookingCtx = document.getElementById('bookingTrendsChart').getContext('2d');
+  const bookingChart = new Chart(bookingCtx, {
+    type: 'line',
+    data: {
+      labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+      datasets: [{
+        label: 'Bookings',
+        data: [25, 32, 28, 35],
+        borderColor: '#1976d2',
+        backgroundColor: 'rgba(25, 118, 210, 0.1)',
+        tension: 0.4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: false
+        }
+      }
+    }
+  });
+
+  // Revenue Chart
+  const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+  const revenueChart = new Chart(revenueCtx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Confirmed', 'Pending', 'Cancelled'],
+      datasets: [{
+        data: [75, 15, 10],
+        backgroundColor: ['#388e3c', '#f57c00', '#d32f2f']
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'bottom'
+        }
+      }
+    }
+  });
+});
+
+function generateReport() {
+  const dateRange = document.getElementById('dateRange').value;
+  const reportType = document.getElementById('reportType').value;
+  const statusFilter = document.getElementById('statusFilter').value;
+  const locationFilter = document.getElementById('locationFilter').value;
+  
+  // Show loading
+  showLoading();
+  
+  // Simulate report generation
+  setTimeout(() => {
+    hideLoading();
+    showSuccessToast('Report generated successfully!');
+    // Here you would typically update the charts and table with new data
+  }, 2000);
+}
+
+function exportReport(format) {
+  showLoading();
+  
+  setTimeout(() => {
+    hideLoading();
+    showSuccessToast(`Report exported as ${format.toUpperCase()} successfully!`);
+  }, 1500);
+}
+</script> 

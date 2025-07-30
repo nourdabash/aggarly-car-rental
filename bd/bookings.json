@@ -1,0 +1,12 @@
+[
+  {
+    "id": "1753808461387",
+    "carId": "car1",
+    "pickupDate": "2025-07-29",
+    "dropoffDate": "2025-08-05",
+    "location": "London",
+    "userId": "1753359653978",
+    "status": "cancelled",
+    "createdAt": "2025-07-29T17:01:01.387Z"
+  }
+]

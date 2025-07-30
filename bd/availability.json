@@ -1,0 +1,6 @@
+[
+  { "carId": "1", "date": "2024-07-01", "available": true },
+  { "carId": "1", "date": "2024-07-02", "available": false },
+  { "carId": "2", "date": "2024-07-01", "available": true },
+  { "carId": "3", "date": "2024-07-01", "available": true }
+] 

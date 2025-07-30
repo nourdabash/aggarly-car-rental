@@ -1,0 +1,114 @@
+<% layout('layout') %>
+<section class="container py-5">
+  <div class="row g-4">
+    <div class="col-md-6">
+      <div class="bg-white rounded shadow-sm p-3">
+        <img src="https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=600&q=80" class="img-fluid rounded mb-3 gallery-thumb" alt="<%= car.brand %> <%= car.model %>">
+        <!-- Gallery (if car.images array exists) -->
+        <% if (car.images && car.images.length > 1) { %>
+          <div class="swipe-gallery d-flex gap-2 mb-3">
+            <img src="https://images.unsplash.com/photo-1461632830798-3adb3034e4c8?auto=format&fit=crop&w=200&q=80" class="img-thumbnail gallery-thumb" alt="Gallery">
+            <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=200&q=80" class="img-thumbnail gallery-thumb" alt="Gallery">
+            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=200&q=80" class="img-thumbnail gallery-thumb" alt="Gallery">
+          </div>
+        <% } %>
+        <button type="button" class="btn btn-link wishlist-btn mt-2" data-car-id="<%= car.id %>" aria-label="Add to wishlist"><i class="bi bi-heart fs-4"></i> Add to Wishlist</button>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div id="nearest-location" class="alert alert-info mb-3"></div>
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          window.showNearestLocation([
+            { name: 'London', lat: 51.5074, lon: -0.1278 },
+            { name: 'Paris', lat: 48.8566, lon: 2.3522 },
+            { name: 'Berlin', lat: 52.52, lon: 13.405 }
+          ]);
+        });
+      </script>
+      <h1 class="section-title fs-2 fw-bold mb-4"><%= car.brand + ' ' + car.model %></h1>
+      <% if (!car.isAvailable) { %>
+        <span class="badge bg-danger">Not available. Will be available in <%= car.notAvailableUntilDays %> day<%= car.notAvailableUntilDays === 1 ? '' : 's' %></span>
+      <% } else { %>
+        <span class="badge bg-success">Available</span>
+      <% } %>
+      <div class="mb-2 text-muted"><%= car.year %> • <%= car.fuel %> • <%= car.transmission %></div>
+      <div class="mb-2">Location: <%= car.location %></div>
+      <div class="fw-bold text-danger mb-2 fs-4">$<%= car.pricePerDay %> / day</div>
+      <p><%= car.description %></p>
+      <% if (car.isAvailable) { %>
+        <!-- Rental Form -->
+        <form class="row g-2 bg-light rounded p-3" method="post" action="/booking">
+          <input type="hidden" name="carId" value="<%= car.id %>">
+          <div class="col-6">
+            <label class="form-label">Pick-up Date</label>
+            <input type="date" name="pickupDate" class="form-control" required>
+          </div>
+          <div class="col-6">
+            <label class="form-label">Drop-off Date</label>
+            <input type="date" name="dropoffDate" class="form-control" required>
+          </div>
+          <div class="col-12">
+            <label class="form-label">Location</label>
+            <select name="location" class="form-select" required>
+              <option><%= car.location %></option>
+            </select>
+          </div>
+          <div class="col-12 d-grid">
+            <button class="btn btn-primary fw-bold">Book Now</button>
+          </div>
+        </form>
+      <% } %>
+    </div>
+  </div>
+</section>
+<!-- Reviews Section -->
+<section class="mt-5">
+  <h4 class="fw-bold mb-3 mt-4">Reviews</h4>
+  <% if (reviews.length === 0) { %>
+    <div class="text-muted">No reviews yet.</div>
+  <% } else { %>
+    <% reviews.forEach(r => { %>
+      <div class="mb-3 p-3 bg-light rounded">
+        <div class="fw-bold">Rating: <%= r.rating %> ★</div>
+        <div><%= r.comment %></div>
+        <div class="small text-muted">Posted on <%= new Date(r.createdAt).toLocaleDateString() %></div>
+      </div>
+    <% }) %>
+  <% } %>
+  <% if (user) { %>
+    <form class="mt-4" method="post" action="/cars/<%= car.id %>/review">
+      <div class="mb-2">
+        <label class="form-label">Your Rating</label>
+        <select name="rating" class="form-select" required>
+          <option value="">Select</option>
+          <option value="5">5 - Excellent</option>
+          <option value="4">4 - Good</option>
+          <option value="3">3 - Average</option>
+          <option value="2">2 - Poor</option>
+          <option value="1">1 - Terrible</option>
+        </select>
+      </div>
+      <div class="mb-2">
+        <label class="form-label">Your Review</label>
+        <textarea name="comment" class="form-control" rows="2" required></textarea>
+      </div>
+      <button class="btn btn-primary">Add Review</button>
+    </form>
+  <% } else { %>
+    <div class="text-muted">Please <a href="/auth/login">login</a> to leave a review.</div>
+  <% } %>
+</section>
+<!-- Trust Badges & Testimonials -->
+<section class="mt-5">
+  <h4 class="fw-bold mb-3">Trust & Testimonials</h4>
+  <div class="d-flex gap-3 mb-3">
+    <span class="badge bg-success">✔ Insurance</span>
+    <span class="badge bg-info">✔ Verified</span>
+    <span class="badge bg-primary">✔ Clean & Safe</span>
+  </div>
+  <div class="bg-white rounded shadow-sm p-3 mt-2">
+    <div class="fw-bold">"Great experience! Highly recommend."</div>
+    <div class="small text-muted">— Verified Customer</div>
+  </div>
+</section> 

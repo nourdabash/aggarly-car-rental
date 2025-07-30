@@ -1,0 +1,24 @@
+{
+  "nav": {
+    "start": "Start",
+    "cars": "Cars",
+    "reservation": "Reservation",
+    "about": "About Us",
+    "contact": "Contact Us",
+    "login": "Login",
+    "register": "Register",
+    "dashboard": "Dashboard",
+    "admin": "Admin",
+    "logout": "Logout"
+  },
+  "booking": {
+    "book_a_car": "Book a Car",
+    "select_car": "Select Car",
+    "pickup_date": "Pick-up Date",
+    "dropoff_date": "Drop-off Date",
+    "location": "Location",
+    "phone": "Phone Number",
+    "book_now": "Book Now",
+    "total_price": "Total Price"
+  }
+} 

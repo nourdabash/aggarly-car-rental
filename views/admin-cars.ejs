@@ -1,0 +1,37 @@
+<% layout('layout') %>
+<section class="container py-5">
+  <h1 class="section-title fs-2 fw-bold mb-4">Manage Cars</h1>
+  <form class="row g-3 bg-white rounded shadow-sm p-4 mb-4" method="post" action="/admin/cars">
+    <input type="hidden" name="id" value="">
+    <div class="col-md-2"><input type="text" name="brand" class="form-control" placeholder="Brand" required></div>
+    <div class="col-md-2"><input type="text" name="model" class="form-control" placeholder="Model" required></div>
+    <div class="col-md-1"><input type="number" name="year" class="form-control" placeholder="Year" required></div>
+    <div class="col-md-1"><input type="text" name="type" class="form-control" placeholder="Type" required></div>
+    <div class="col-md-1"><input type="text" name="fuel" class="form-control" placeholder="Fuel" required></div>
+    <div class="col-md-1"><input type="text" name="transmission" class="form-control" placeholder="Transmission" required></div>
+    <div class="col-md-2"><input type="text" name="location" class="form-control" placeholder="Location" required></div>
+    <div class="col-md-1"><input type="number" name="pricePerDay" class="form-control" placeholder="Price" required></div>
+    <div class="col-md-1"><input type="text" name="image" class="form-control" placeholder="Image" required></div>
+    <div class="col-12 mt-2"><textarea name="description" class="form-control" placeholder="Description" rows="2"></textarea></div>
+    <div class="col-12 d-grid"><button class="btn btn-primary fw-bold">Add Car</button></div>
+  </form>
+  <div class="row g-4">
+    <% cars.forEach(car => { %>
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm">
+          <img src="<%= car.image && car.image.startsWith('http') ? car.image : '/images/' + car.image %>" class="card-img-top" alt="<%= car.brand %> <%= car.model %>">
+          <div class="card-body">
+            <h5 class="card-title fw-bold"><%= car.brand %> <%= car.model %></h5>
+            <div class="mb-2 small text-muted"><%= car.year %> • <%= car.fuel %> • <%= car.transmission %></div>
+            <div class="mb-2">Location: <%= car.location %></div>
+            <div class="fw-bold text-danger mb-2">$<%= car.pricePerDay %> / day</div>
+            <form method="post" action="/admin/cars/delete" onsubmit="return confirm('Delete this car?');">
+              <input type="hidden" name="id" value="<%= car.id %>">
+              <button class="btn btn-danger btn-sm">Delete</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+</section> 

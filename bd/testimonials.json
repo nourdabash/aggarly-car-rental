@@ -1,0 +1,12 @@
+[
+  { "name": "John Doe", "text": "Great service, clean cars, and super easy booking process! Will rent again.", "date": "2024-06-01", "avatar": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=facearea&w=48&h=48&q=80" },
+  { "name": "Jane Smith", "text": "Affordable prices and friendly staff. Highly recommended!", "date": "2024-06-10", "avatar": "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=facearea&w=48&h=48&q=80" },
+  { "name": "Michael Chen", "text": "Perfect for business trips. Professional service and reliable vehicles.", "date": "2024-05-28", "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&w=48&h=48&q=80" },
+  { "name": "Sarah Johnson", "text": "Family vacation was amazing thanks to Aggarly. Clean cars and great prices!", "date": "2024-06-05", "avatar": "https://images.unsplash.com/photo-1494790108755-2616b612b786?auto=format&fit=facearea&w=48&h=48&q=80" },
+  { "name": "David Wilson", "text": "Best car rental experience ever. Quick pickup and drop-off process.", "date": "2024-05-30", "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=facearea&w=48&h=48&q=80" },
+  { "name": "Emily Rodriguez", "text": "Customer service is outstanding. They helped me with everything I needed.", "date": "2024-06-12", "avatar": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=facearea&w=48&h=48&q=80" },
+  { "name": "Robert Thompson", "text": "Great selection of vehicles and transparent pricing. No hidden fees!", "date": "2024-06-08", "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=facearea&w=48&h=48&q=80" },
+  { "name": "Lisa Anderson", "text": "Perfect for weekend getaways. Easy booking and great car quality.", "date": "2024-06-03", "avatar": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=facearea&w=48&h=48&q=80" },
+  { "name": "James Martinez", "text": "Excellent service from start to finish. Will definitely use again!", "date": "2024-05-25", "avatar": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=facearea&w=48&h=48&q=80" },
+  { "name": "Amanda Lee", "text": "Best car rental platform I've used. User-friendly and reliable.", "date": "2024-06-15", "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=facearea&w=48&h=48&q=80" }
+] 

@@ -1,0 +1,21 @@
+<% layout('layout') %>
+<section class="container py-5">
+  <h1 class="section-title fs-2 fw-bold mb-4">Manage Users</h1>
+  <div class="row g-4">
+    <% if (users.length === 0) { %>
+      <div class="col-12 text-center text-muted">No users found.</div>
+    <% } %>
+    <% users.forEach(u => { %>
+      <div class="col-md-6">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title fw-bold"><%= u.name %></h5>
+            <div class="mb-2 small text-muted">Email: <%= u.email %></div>
+            <div class="mb-2">Role: <span class="badge bg-info"><%= u.role %></span></div>
+            <div class="mb-2">Joined: <%= new Date(u.createdAt).toLocaleString() %></div>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+</section> 

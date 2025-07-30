@@ -1,0 +1,25 @@
+<% layout('layout') %>
+<section class="container py-5 text-center">
+  <div class="modal-dialog modal-dialog-centered" style="max-width:500px;">
+    <div class="modal-content p-4">
+      <div class="modal-header border-0">
+        <h1 class="section-title fs-2 fw-bold mb-4">Booking Confirmed</h1>
+      </div>
+      <div class="modal-body">
+        <p class="lead mb-4">Your booking has been confirmed! Thank you for choosing Aggarly.</p>
+        <% if (car && booking) { %>
+          <p class="mb-3">Thank you for your reservation. Here are your booking details:</p>
+          <ul class="list-group mb-3 text-start">
+            <li class="list-group-item"><b>Car:</b> <%= car.brand %> <%= car.model %></li>
+            <li class="list-group-item"><b>Pick-up:</b> <%= booking.pickupDate %></li>
+            <li class="list-group-item"><b>Drop-off:</b> <%= booking.dropoffDate %></li>
+            <li class="list-group-item"><b>Location:</b> <%= booking.location %></li>
+          </ul>
+        <% } else { %>
+          <p class="mb-3">Your booking was successful. You will receive a confirmation email shortly.</p>
+        <% } %>
+        <a href="/" class="btn btn-primary">Back to Home</a>
+      </div>
+    </div>
+  </div>
+</section> 

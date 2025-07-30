@@ -1,0 +1,148 @@
+<% layout('layout') %>
+<section class="container py-5">
+  <div class="row">
+    <div class="col-lg-8 mx-auto">
+      <!-- Header -->
+      <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold mb-3">Frequently Asked Questions</h1>
+        <p class="lead text-muted">Find quick answers to the most common questions</p>
+      </div>
+
+      <!-- FAQ Categories -->
+      <div class="accordion" id="faqAccordion">
+        <!-- Booking Questions -->
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="bookingHeading">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#bookingCollapse" aria-expanded="true" aria-controls="bookingCollapse">
+              <i class="bi bi-calendar-check me-2"></i>Booking & Reservations
+            </button>
+          </h2>
+          <div id="bookingCollapse" class="accordion-collapse collapse show" aria-labelledby="bookingHeading" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              <div class="mb-4">
+                <h5>How do I make a reservation?</h5>
+                <p>To make a reservation, browse our available vehicles, select your desired car, choose your pickup and dropoff dates, and complete the booking form. You'll receive a confirmation email once your reservation is confirmed.</p>
+              </div>
+              <div class="mb-4">
+                <h5>Can I modify or cancel my booking?</h5>
+                <p>Yes, you can modify or cancel your booking up to 24 hours before your pickup date. Log into your account and go to your booking history to make changes.</p>
+              </div>
+              <div class="mb-4">
+                <h5>What payment methods do you accept?</h5>
+                <p>We accept all major credit cards (Visa, MasterCard, American Express), debit cards, and digital wallets like PayPal and Apple Pay.</p>
+              </div>
+              <div class="mb-4">
+                <h5>Is there a minimum rental period?</h5>
+                <p>Yes, the minimum rental period is 1 day. You can rent vehicles for as long as you need, with daily rates clearly displayed for each vehicle.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vehicle Questions -->
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="vehicleHeading">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#vehicleCollapse" aria-expanded="false" aria-controls="vehicleCollapse">
+              <i class="bi bi-car-front me-2"></i>Vehicles & Fleet
+            </button>
+          </h2>
+          <div id="vehicleCollapse" class="accordion-collapse collapse" aria-labelledby="vehicleHeading" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              <div class="mb-4">
+                <h5>What types of vehicles do you offer?</h5>
+                <p>We offer a wide range of vehicles including economy cars, luxury sedans, SUVs, and electric vehicles. Each category is designed to meet different needs and budgets.</p>
+              </div>
+              <div class="mb-4">
+                <h5>Are the vehicles well-maintained?</h5>
+                <p>Yes, all our vehicles undergo regular maintenance and safety inspections. We ensure every vehicle meets our high standards for safety and reliability.</p>
+              </div>
+              <div class="mb-4">
+                <h5>Do you offer insurance coverage?</h5>
+                <p>Yes, we offer comprehensive insurance coverage options. Basic coverage is included, and you can purchase additional protection for extra peace of mind.</p>
+              </div>
+              <div class="mb-4">
+                <h5>Can I see the vehicle before booking?</h5>
+                <p>Yes, you can view detailed photos and specifications of each vehicle on our website. For specific requests, contact our customer service team.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Account Questions -->
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="accountHeading">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accountCollapse" aria-expanded="false" aria-controls="accountCollapse">
+              <i class="bi bi-person-circle me-2"></i>Account & Profile
+            </button>
+          </h2>
+          <div id="accountCollapse" class="accordion-collapse collapse" aria-labelledby="accountHeading" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              <div class="mb-4">
+                <h5>How do I create an account?</h5>
+                <p>Creating an account is easy! Click on "Sign Up" and provide your basic information including name, email, and password. You'll receive a verification email to activate your account.</p>
+              </div>
+              <div class="mb-4">
+                <h5>I forgot my password. How do I reset it?</h5>
+                <p>Click on "Forgot Password" on the login page, enter your email address, and we'll send you a link to reset your password securely.</p>
+              </div>
+              <div class="mb-4">
+                <h5>How do I update my profile information?</h5>
+                <p>Log into your account and go to "Profile Settings" to update your personal information, contact details, and preferences.</p>
+              </div>
+              <div class="mb-4">
+                <h5>Can I view my booking history?</h5>
+                <p>Yes, you can view your complete booking history in your account dashboard, including past, current, and upcoming reservations.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Support Questions -->
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="supportHeading">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#supportCollapse" aria-expanded="false" aria-controls="supportCollapse">
+              <i class="bi bi-headset me-2"></i>Customer Support
+            </button>
+          </h2>
+          <div id="supportCollapse" class="accordion-collapse collapse" aria-labelledby="supportHeading" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              <div class="mb-4">
+                <h5>How can I contact customer support?</h5>
+                <p>You can contact us through multiple channels: phone, email, or live chat. Our support team is available 24/7 to assist you with any questions or concerns.</p>
+              </div>
+              <div class="mb-4">
+                <h5>What are your support hours?</h5>
+                <p>Our customer support team is available 24/7. For urgent matters, you can call our emergency hotline which is always staffed.</p>
+              </div>
+              <div class="mb-4">
+                <h5>How do I report an issue with my rental?</h5>
+                <p>If you encounter any issues with your rental, contact our support team immediately. We'll work quickly to resolve the problem and ensure your satisfaction.</p>
+              </div>
+              <div class="mb-4">
+                <h5>Can I provide feedback about my experience?</h5>
+                <p>Yes, we welcome your feedback! You can submit reviews and ratings after your rental, or contact us directly to share your experience.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Support -->
+      <div class="card shadow-sm mt-5">
+        <div class="card-body p-4">
+          <div class="row align-items-center">
+            <div class="col-md-8">
+              <h4 class="mb-2">Still have questions?</h4>
+              <p class="text-muted mb-0">Our support team is here to help with any questions not covered in our FAQ.</p>
+            </div>
+            <div class="col-md-4 text-md-end">
+              <a href="/contact" class="btn btn-primary">
+                <i class="bi bi-envelope me-2"></i>Contact Support
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> 

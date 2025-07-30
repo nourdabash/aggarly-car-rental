@@ -1,0 +1,275 @@
+<% layout('layout') %>
+<section class="container py-5">
+  <div class="row">
+    <div class="col-12">
+      <!-- Welcome Header -->
+      <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold mb-3">Welcome back, <%= user.name %>!</h1>
+        <p class="lead text-muted">Manage your bookings and account</p>
+      </div>
+
+      <!-- Success/Error Messages -->
+      <% if (reservationSuccess) { %>
+        <div class="alert alert-success alert-dismissible fade show" role="alert" style="max-width: 600px; margin: 0 auto 2rem auto;">
+          <i class="bi bi-check-circle me-2"></i>
+          <strong>Success!</strong> Your reservation has been confirmed.
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <% } %>
+      
+      <% if (cancelSuccess) { %>
+        <div class="alert alert-success alert-dismissible fade show" role="alert" style="max-width: 600px; margin: 0 auto 2rem auto;">
+          <i class="bi bi-check-circle me-2"></i>
+          <strong>Success!</strong> Reservation cancelled successfully.
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <% } %>
+      
+                <% if (cancelFail) { %>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="max-width: 600px; margin: 0 auto 2rem auto;">
+              <i class="bi bi-exclamation-triangle me-2"></i>
+              <strong>Error!</strong> 
+              <% if (cancelReason === 'not_found') { %>
+                Booking not found or you don't have permission to cancel it.
+              <% } else if (cancelReason === 'already_processed') { %>
+                This booking has already been cancelled or completed.
+              <% } else if (cancelReason === 'already_started') { %>
+                Cannot cancel this reservation as the rental period has already started.
+              <% } else { %>
+                Cannot cancel this reservation (it may have already started or ended).
+              <% } %>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          <% } %>
+      
+      <% if (bookingEmailSent) { %>
+        <div class="alert alert-info alert-dismissible fade show" role="alert" style="max-width: 600px; margin: 0 auto 2rem auto;">
+          <i class="bi bi-envelope me-2"></i>
+          A confirmation email has been sent to your address.
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <% } %>
+
+      <!-- Account Information -->
+      <div class="row g-4 mb-5">
+        <div class="col-md-6">
+          <div class="card h-100">
+            <div class="card-header bg-primary text-white">
+              <h5 class="mb-0">
+                <i class="bi bi-person-circle me-2"></i>
+                Account Information
+              </h5>
+            </div>
+            <div class="card-body">
+              <div class="row g-3">
+                <div class="col-6">
+                  <label class="form-label fw-bold text-muted">Name</label>
+                  <p class="mb-0"><%= user.name %></p>
+                </div>
+                <div class="col-6">
+                  <label class="form-label fw-bold text-muted">Email</label>
+                  <p class="mb-0"><%= user.email %></p>
+                </div>
+                <div class="col-6">
+                  <label class="form-label fw-bold text-muted">Member Since</label>
+                  <p class="mb-0"><%= new Date(user.createdAt).toLocaleDateString() %></p>
+                </div>
+                <div class="col-6">
+                  <label class="form-label fw-bold text-muted">Account Type</label>
+                  <p class="mb-0">
+                    <span class="badge bg-<%= user.role === 'admin' ? 'danger' : 'primary' %>">
+                      <%= user.role.charAt(0).toUpperCase() + user.role.slice(1) %>
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="col-md-6">
+          <div class="card h-100">
+            <div class="card-header bg-success text-white">
+              <h5 class="mb-0">
+                <i class="bi bi-lightning-charge me-2"></i>
+                Quick Actions
+              </h5>
+            </div>
+            <div class="card-body">
+              <div class="d-grid gap-3">
+                <a href="/reservation" class="btn btn-primary">
+                  <i class="bi bi-calendar-plus me-2"></i>
+                  Make New Reservation
+                </a>
+                <a href="/cars" class="btn btn-outline-primary">
+                  <i class="bi bi-car-front me-2"></i>
+                  Browse Available Cars
+                </a>
+                <a href="/contact" class="btn btn-outline-secondary">
+                  <i class="bi bi-envelope me-2"></i>
+                  Contact Support
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bookings Section -->
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">
+            <i class="bi bi-calendar-check me-2"></i>
+            My Bookings
+          </h5>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-outline-primary btn-sm active" data-filter="all">All</button>
+            <button type="button" class="btn btn-outline-success btn-sm" data-filter="confirmed">Confirmed</button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" data-filter="completed">Completed</button>
+            <button type="button" class="btn btn-outline-danger btn-sm" data-filter="cancelled">Cancelled</button>
+          </div>
+        </div>
+        <div class="card-body">
+          <% if (bookings && bookings.length === 0) { %>
+            <div class="text-center py-5">
+              <i class="bi bi-calendar-x display-1 text-muted mb-3"></i>
+              <h4 class="text-muted">No bookings found</h4>
+              <p class="text-muted">Start by making your first reservation!</p>
+              <a href="/reservation" class="btn btn-primary">
+                <i class="bi bi-calendar-plus me-2"></i>
+                Make a Reservation
+              </a>
+            </div>
+          <% } else { %>
+            <div class="row g-4">
+              <% bookings.forEach(function(b) { %>
+                <div class="col-12 booking-card" data-status="<%= b.status %>">
+                  <div class="card h-100">
+                    <div class="card-body">
+                      <div class="row align-items-center">
+                        <div class="col-md-8">
+                          <h5 class="card-title fw-bold mb-2">
+                            <% if (b.car) { %>
+                              <%= b.car.brand %> <%= b.car.model %>
+                            <% } else { %>
+                              [Car not found]
+                            <% } %>
+                          </h5>
+                          <div class="row text-muted small mb-3">
+                            <div class="col-6">
+                              <i class="bi bi-calendar me-1"></i>
+                              <%= new Date(b.pickupDate).toLocaleDateString() %> - <%= new Date(b.dropoffDate).toLocaleDateString() %>
+                            </div>
+                            <div class="col-6">
+                              <i class="bi bi-geo-alt me-1"></i>
+                              <%= b.location %>
+                            </div>
+                            <div class="col-6">
+                              <i class="bi bi-calendar-event me-1"></i>
+                              <%= new Date(b.createdAt).toLocaleDateString() %>
+                            </div>
+                            <div class="col-6">
+                              <i class="bi bi-currency-dollar me-1"></i>
+                              $<%= b.totalPrice || 'N/A' %>
+                            </div>
+                          </div>
+                          <div class="mb-3">
+                            <span class="badge bg-<%= b.status === 'cancelled' ? 'danger' : (b.status === 'completed' ? 'secondary' : 'success') %> fs-6">
+                              <i class="bi bi-<%= b.status === 'cancelled' ? 'x-circle' : (b.status === 'completed' ? 'check-circle' : 'clock') %> me-1"></i>
+                              <%= b.status.charAt(0).toUpperCase() + b.status.slice(1) %>
+                            </span>
+                          </div>
+                        </div>
+                        <div class="col-md-4 text-end">
+                          <div class="d-flex flex-column gap-2">
+                            <% if (b.status === 'confirmed' && new Date(b.dropoffDate) >= new Date()) { %>
+                              <form method="post" action="/dashboard/cancel" onsubmit="return confirm('Are you sure you want to cancel this reservation?');">
+                                <input type="hidden" name="bookingId" value="<%= b.id %>">
+                                <button class="btn btn-danger btn-sm w-100">
+                                  <i class="bi bi-x-circle me-1"></i>Cancel
+                                </button>
+                              </form>
+                            <% } %>
+                            <button class="btn btn-outline-secondary btn-sm w-100" onclick="downloadInvoice('<%= b.id %>')">
+                              <i class="bi bi-download me-1"></i>Download Invoice
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <% }); %>
+            </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const filterButtons = document.querySelectorAll('[data-filter]');
+  const bookingCards = document.querySelectorAll('.booking-card');
+  
+  filterButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      const filter = this.getAttribute('data-filter');
+      
+      // Update active button
+      filterButtons.forEach(btn => btn.classList.remove('active'));
+      this.classList.add('active');
+      
+      // Filter cards
+      bookingCards.forEach(card => {
+        const status = card.getAttribute('data-status');
+        if (filter === 'all' || status === filter) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+});
+</script>
+
+<script>
+function downloadInvoice(bookingId) {
+  showLoading();
+  
+  // Simulate invoice generation
+  setTimeout(() => {
+    hideLoading();
+    
+    // Create a mock invoice content
+    const invoiceContent = `
+INVOICE
+Booking ID: ${bookingId}
+Date: ${new Date().toLocaleDateString()}
+Customer: ${user.name}
+Email: ${user.email}
+
+Thank you for choosing Aggarly!
+Your invoice has been generated successfully.
+
+This is a mock invoice for demonstration purposes.
+    `;
+    
+    // Create and download the file
+    const blob = new Blob([invoiceContent], { type: 'text/plain' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `invoice-${bookingId}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+    
+    showSuccessToast('Invoice downloaded successfully!');
+  }, 1500);
+}
+</script> 

@@ -1,0 +1,24 @@
+<% layout('layout') %>
+<section class="container py-5">
+  <h1 class="section-title fs-2 fw-bold mb-4">Manage Locations</h1>
+  <form class="row g-3 bg-white rounded shadow-sm p-4 mb-4" method="post" action="/admin/locations">
+    <input type="hidden" name="id" value="">
+    <div class="col-md-8"><input type="text" name="name" class="form-control" placeholder="Location Name" required></div>
+    <div class="col-md-4 d-grid"><button class="btn btn-primary fw-bold">Add Location</button></div>
+  </form>
+  <div class="row g-4">
+    <% locations.forEach(loc => { %>
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title fw-bold"><%= loc.name %></h5>
+            <form method="post" action="/admin/locations/delete" onsubmit="return confirm('Delete this location?');">
+              <input type="hidden" name="id" value="<%= loc.id %>">
+              <button class="btn btn-danger btn-sm">Delete</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+</section> 

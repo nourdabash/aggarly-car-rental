@@ -1,0 +1,24 @@
+{
+  "nav": {
+    "start": "Accueil",
+    "cars": "Voitures",
+    "reservation": "Réservation",
+    "about": "À propos",
+    "contact": "Contact",
+    "login": "Connexion",
+    "register": "Inscription",
+    "dashboard": "Tableau de bord",
+    "admin": "Admin",
+    "logout": "Déconnexion"
+  },
+  "booking": {
+    "book_a_car": "Réserver une voiture",
+    "select_car": "Choisir une voiture",
+    "pickup_date": "Date de prise en charge",
+    "dropoff_date": "Date de retour",
+    "location": "Lieu",
+    "phone": "Numéro de téléphone",
+    "book_now": "Réserver",
+    "total_price": "Prix total"
+  }
+} 

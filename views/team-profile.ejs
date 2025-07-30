@@ -1,0 +1,18 @@
+<% layout('layout') %>
+<section class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="bg-white rounded shadow-sm p-5 text-center">
+        <img src="<%= member.img %>" class="rounded-circle mb-3" style="width:120px;height:120px;object-fit:cover;" alt="<%= member.name %>">
+        <h2 class="fw-bold mb-1"><%= member.name %></h2>
+        <div class="text-muted mb-3"><%= member.title %></div>
+        <p class="mb-4"><%= member.bio %></p>
+        <div class="d-flex justify-content-center gap-3 mb-3">
+          <a href="mailto:<%= member.email %>" class="btn btn-outline-primary btn-sm"><i class="bi bi-envelope me-1"></i>Email</a>
+          <a href="<%= member.linkedin %>" target="_blank" class="btn btn-info btn-sm text-white"><i class="bi bi-linkedin me-1"></i>LinkedIn</a>
+        </div>
+        <a href="/about" class="btn btn-secondary btn-sm">Back to Team</a>
+      </div>
+    </div>
+  </div>
+</section> 

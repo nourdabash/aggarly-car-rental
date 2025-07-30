@@ -1,0 +1,38 @@
+<% layout('layout') %>
+<section class="container py-5">
+  <h1 class="section-title fs-2 fw-bold mb-4">Contact Us</h1>
+  <% if (success) { %>
+    <div class="alert alert-success"><%= success %></div>
+  <% } %>
+  <div class="row g-4">
+    <div class="col-md-6">
+      <form method="post" action="/contact" class="bg-white rounded shadow-sm p-4">
+        <div class="mb-3">
+          <label class="form-label">Your Name</label>
+          <input type="text" name="name" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input type="email" name="email" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Message</label>
+          <textarea name="message" class="form-control" rows="4" required></textarea>
+        </div>
+        <div class="d-grid">
+          <button class="btn btn-primary fw-bold">Send Message</button>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-6">
+      <div class="bg-white rounded shadow-sm p-4 mb-4">
+        <h4 class="fw-bold mb-3">Support</h4>
+        <p>Email: support@agarly.com<br>Phone: +123 456 7890</p>
+        <h4 class="fw-bold mb-3">Our Location</h4>
+        <div class="ratio ratio-16x9">
+          <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=0.09%2C51.5%2C0.11%2C51.51&amp;layer=mapnik" style="border:0;" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> 

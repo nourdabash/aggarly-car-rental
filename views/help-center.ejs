@@ -1,0 +1,170 @@
+<% layout('layout') %>
+<section class="container py-5">
+  <div class="row">
+    <div class="col-lg-8 mx-auto">
+      <!-- Header -->
+      <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold mb-3">Help Center</h1>
+        <p class="lead text-muted">Find answers to common questions and get support</p>
+      </div>
+
+      <!-- Search Box -->
+      <div class="card shadow-sm mb-5">
+        <div class="card-body p-4">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search for help..." id="helpSearch">
+            <button class="btn btn-primary" type="button">
+              <i class="bi bi-search"></i> Search
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Help Categories -->
+      <div class="row g-4">
+        <!-- Booking Help -->
+        <div class="col-md-6">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body p-4">
+              <div class="d-flex align-items-center mb-3">
+                <i class="bi bi-calendar-check text-primary fs-2 me-3"></i>
+                <h4 class="mb-0">Booking & Reservations</h4>
+              </div>
+              <ul class="list-unstyled">
+                <li class="mb-2">
+                  <a href="#how-to-book" class="text-decoration-none">How to make a reservation</a>
+                </li>
+                <li class="mb-2">
+                  <a href="#modify-booking" class="text-decoration-none">Modify or cancel your booking</a>
+                </li>
+                <li class="mb-2">
+                  <a href="#booking-confirmation" class="text-decoration-none">Booking confirmation process</a>
+                </li>
+                <li class="mb-2">
+                  <a href="#payment-methods" class="text-decoration-none">Accepted payment methods</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Account Help -->
+        <div class="col-md-6">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body p-4">
+              <div class="d-flex align-items-center mb-3">
+                <i class="bi bi-person-circle text-primary fs-2 me-3"></i>
+                <h4 class="mb-0">Account & Profile</h4>
+              </div>
+              <ul class="list-unstyled">
+                <li class="mb-2">
+                  <a href="#create-account" class="text-decoration-none">Creating an account</a>
+                </li>
+                <li class="mb-2">
+                  <a href="#reset-password" class="text-decoration-none">Reset your password</a>
+                </li>
+                <li class="mb-2">
+                  <a href="#update-profile" class="text-decoration-none">Update profile information</a>
+                </li>
+                <li class="mb-2">
+                  <a href="#booking-history" class="text-decoration-none">View booking history</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vehicle Help -->
+        <div class="col-md-6">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body p-4">
+              <div class="d-flex align-items-center mb-3">
+                <i class="bi bi-car-front text-primary fs-2 me-3"></i>
+                <h4 class="mb-0">Vehicles & Fleet</h4>
+              </div>
+              <ul class="list-unstyled">
+                <li class="mb-2">
+                  <a href="#vehicle-categories" class="text-decoration-none">Vehicle categories explained</a>
+                </li>
+                <li class="mb-2">
+                  <a href="#vehicle-availability" class="text-decoration-none">Check vehicle availability</a>
+                </li>
+                <li class="mb-2">
+                  <a href="#vehicle-features" class="text-decoration-none">Vehicle features and amenities</a>
+                </li>
+                <li class="mb-2">
+                  <a href="#insurance-coverage" class="text-decoration-none">Insurance and coverage details</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Support Help -->
+        <div class="col-md-6">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body p-4">
+              <div class="d-flex align-items-center mb-3">
+                <i class="bi bi-headset text-primary fs-2 me-3"></i>
+                <h4 class="mb-0">Customer Support</h4>
+              </div>
+              <ul class="list-unstyled">
+                <li class="mb-2">
+                  <a href="#contact-support" class="text-decoration-none">Contact customer support</a>
+                </li>
+                <li class="mb-2">
+                  <a href="#emergency-contact" class="text-decoration-none">Emergency contact information</a>
+                </li>
+                <li class="mb-2">
+                  <a href="#support-hours" class="text-decoration-none">Support hours and availability</a>
+                </li>
+                <li class="mb-2">
+                  <a href="#feedback" class="text-decoration-none">Submit feedback or complaints</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Support -->
+      <div class="card shadow-sm mt-5">
+        <div class="card-body p-4">
+          <div class="row align-items-center">
+            <div class="col-md-8">
+              <h4 class="mb-2">Still need help?</h4>
+              <p class="text-muted mb-0">Our customer support team is here to help you with any questions or concerns.</p>
+            </div>
+            <div class="col-md-4 text-md-end">
+              <a href="/contact" class="btn btn-primary">
+                <i class="bi bi-envelope me-2"></i>Contact Support
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const helpSearch = document.getElementById('helpSearch');
+  
+  helpSearch.addEventListener('input', function() {
+    const searchTerm = this.value.toLowerCase();
+    const helpItems = document.querySelectorAll('.card-body ul li a');
+    
+    helpItems.forEach(item => {
+      const text = item.textContent.toLowerCase();
+      if (text.includes(searchTerm)) {
+        item.style.display = '';
+        item.parentElement.style.display = '';
+      } else {
+        item.style.display = 'none';
+        item.parentElement.style.display = 'none';
+      }
+    });
+  });
+});
+</script> 

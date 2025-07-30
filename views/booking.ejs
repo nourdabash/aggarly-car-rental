@@ -1,0 +1,295 @@
+<% layout('layout') %>
+<section class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <!-- Header -->
+      <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold mb-3">Reserve Your Car</h1>
+        <p class="lead text-muted">Complete your booking in just a few steps</p>
+      </div>
+
+      <!-- Progress Indicator -->
+      <div class="card mb-4">
+        <div class="card-body">
+          <div class="row text-center">
+            <div class="col-4">
+              <div class="d-flex align-items-center justify-content-center mb-2">
+                <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center text-white fw-bold" style="width: 40px; height: 40px;">1</div>
+              </div>
+              <small class="text-muted">Select Dates</small>
+            </div>
+            <div class="col-4">
+              <div class="d-flex align-items-center justify-content-center mb-2">
+                <div class="bg-secondary rounded-circle d-flex align-items-center justify-content-center text-white fw-bold" style="width: 40px; height: 40px;">2</div>
+              </div>
+              <small class="text-muted">Choose Car</small>
+            </div>
+            <div class="col-4">
+              <div class="d-flex align-items-center justify-content-center mb-2">
+                <div class="bg-secondary rounded-circle d-flex align-items-center justify-content-center text-white fw-bold" style="width: 40px; height: 40px;">3</div>
+              </div>
+              <small class="text-muted">Confirm Booking</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Booking Form -->
+      <div class="card shadow-lg">
+        <div class="card-body p-5">
+          <% if (error) { %>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              <i class="bi bi-exclamation-triangle me-2"></i>
+              <%= error %>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          <% } %>
+
+          <form method="post" action="/booking" class="row g-4" id="bookingForm">
+            <!-- Date Selection -->
+            <div class="col-12">
+              <h5 class="fw-bold mb-3">
+                <i class="bi bi-calendar-event me-2 text-primary"></i>
+                Select Your Rental Dates
+              </h5>
+            </div>
+            
+            <div class="col-md-6">
+              <label for="pickupDate" class="form-label fw-bold">
+                Pick-up Date <span class="text-danger">*</span>
+              </label>
+              <div class="input-group">
+                <span class="input-group-text">
+                  <i class="bi bi-calendar-plus"></i>
+                </span>
+                <input type="date" id="pickupDate" name="pickupDate" class="form-control" required 
+                       min="<%= new Date().toISOString().split('T')[0] %>" 
+                       aria-describedby="pickupHelp">
+              </div>
+              <div id="pickupHelp" class="form-text">
+                <i class="bi bi-info-circle me-1"></i>
+                Select a date in the future
+              </div>
+            </div>
+            
+            <div class="col-md-6">
+              <label for="dropoffDate" class="form-label fw-bold">
+                Drop-off Date <span class="text-danger">*</span>
+              </label>
+              <div class="input-group">
+                <span class="input-group-text">
+                  <i class="bi bi-calendar-minus"></i>
+                </span>
+                <input type="date" id="dropoffDate" name="dropoffDate" class="form-control" required 
+                       min="<%= new Date().toISOString().split('T')[0] %>" 
+                       aria-describedby="dropoffHelp">
+              </div>
+              <div id="dropoffHelp" class="form-text">
+                <i class="bi bi-info-circle me-1"></i>
+                Must be after pick-up date
+              </div>
+            </div>
+
+            <!-- Car Selection -->
+            <div class="col-12">
+              <h5 class="fw-bold mb-3">
+                <i class="bi bi-car-front me-2 text-primary"></i>
+                Choose Your Vehicle
+              </h5>
+            </div>
+            
+            <div class="col-12">
+              <label for="carSelect" class="form-label fw-bold">
+                Select Car <span class="text-danger">*</span>
+              </label>
+              <div class="input-group">
+                <span class="input-group-text">
+                  <i class="bi bi-car-front"></i>
+                </span>
+                <select id="carSelect" name="carId" class="form-select" required aria-describedby="carHelp">
+                  <option value="">Choose a car...</option>
+                  <% cars.forEach(function(car) { %>
+                    <option value="<%= car.id %>" data-price="<%= car.pricePerDay %>" <% if (car.currentStock === 0) { %>disabled style="text-decoration: line-through; color: #888;"<% } %><% if (selectedCarId && car.id == selectedCarId) { %> selected<% } %>>
+                      <%= car.brand %> <%= car.model %> - $<%= car.pricePerDay %>/day <% if (car.currentStock === 0) { %>(Sold Out)<% } %>
+                    </option>
+                  <% }); %>
+                </select>
+              </div>
+              <div id="carHelp" class="form-text">
+                <i class="bi bi-info-circle me-1"></i>
+                Choose from our available vehicles
+              </div>
+            </div>
+
+            <!-- Location Selection -->
+            <div class="col-12">
+              <label for="location" class="form-label fw-bold">
+                Pickup Location <span class="text-danger">*</span>
+              </label>
+              <div class="input-group">
+                <span class="input-group-text">
+                  <i class="bi bi-geo-alt"></i>
+                </span>
+                <select id="location" name="location" class="form-select" required aria-describedby="locationHelp">
+                  <option value="">Select location...</option>
+                  <option value="London">London</option>
+                  <option value="Manchester">Manchester</option>
+                  <option value="Birmingham">Birmingham</option>
+                  <option value="Liverpool">Liverpool</option>
+                  <option value="Leeds">Leeds</option>
+                  <option value="Glasgow">Glasgow</option>
+                  <option value="Edinburgh">Edinburgh</option>
+                  <option value="Bristol">Bristol</option>
+                  <option value="Sheffield">Sheffield</option>
+                  <option value="Nottingham">Nottingham</option>
+                  <option value="Leicester">Leicester</option>
+                  <option value="Southampton">Southampton</option>
+                  <option value="Cardiff">Cardiff</option>
+                  <option value="Dublin">Dublin</option>
+                  <option value="Paris">Paris</option>
+                  <option value="Berlin">Berlin</option>
+                  <option value="Amsterdam">Amsterdam</option>
+                  <option value="Brussels">Brussels</option>
+                  <option value="Madrid">Madrid</option>
+                  <option value="Rome">Rome</option>
+                  <option value="Zurich">Zurich</option>
+                  <option value="Vienna">Vienna</option>
+                  <option value="Prague">Prague</option>
+                  <option value="Barcelona">Barcelona</option>
+                  <option value="Milan">Milan</option>
+                  <option value="Lisbon">Lisbon</option>
+                  <option value="Warsaw">Warsaw</option>
+                  <option value="Budapest">Budapest</option>
+                  <option value="Copenhagen">Copenhagen</option>
+                  <option value="Stockholm">Stockholm</option>
+                </select>
+              </div>
+              <div id="locationHelp" class="form-text">
+                <i class="bi bi-info-circle me-1"></i>
+                Choose your preferred pickup location
+              </div>
+            </div>
+
+            <!-- Price Summary -->
+            <div class="col-12">
+              <div class="alert alert-info" role="alert">
+                <div class="d-flex align-items-center mb-2">
+                  <i class="bi bi-info-circle me-2"></i>
+                  <strong>Price Summary</strong>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <small class="text-muted">Rental Period:</small>
+                    <div id="rentalPeriod">Select dates</div>
+                  </div>
+                  <div class="col-md-6">
+                    <small class="text-muted">Total Cost:</small>
+                    <div class="fs-5 fw-bold text-primary" id="totalCost">$0</div>
+                  </div>
+                </div>
+                <small class="text-muted">Price calculated based on selected dates and car</small>
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="col-12">
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary btn-lg fw-bold" onclick="showLoading()">
+                  <i class="bi bi-calendar-check me-2"></i>
+                  Confirm Booking
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Additional Information -->
+      <div class="row mt-5">
+        <div class="col-md-4">
+          <div class="text-center p-3">
+            <i class="bi bi-shield-check text-primary fs-1 mb-3"></i>
+            <h6 class="fw-bold">Fully Insured</h6>
+            <small class="text-muted">All rentals include comprehensive insurance</small>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="text-center p-3">
+            <i class="bi bi-clock text-primary fs-1 mb-3"></i>
+            <h6 class="fw-bold">24/7 Support</h6>
+            <small class="text-muted">Round-the-clock customer assistance</small>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="text-center p-3">
+            <i class="bi bi-credit-card text-primary fs-1 mb-3"></i>
+            <h6 class="fw-bold">Secure Payment</h6>
+            <small class="text-muted">Safe and encrypted payment processing</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const carSelect = document.getElementById('carSelect');
+  const pickupDate = document.getElementById('pickupDate');
+  const dropoffDate = document.getElementById('dropoffDate');
+  const totalCostSpan = document.getElementById('totalCost');
+  const rentalPeriodSpan = document.getElementById('rentalPeriod');
+  
+  function calculateTotal() {
+    const selectedCar = carSelect.options[carSelect.selectedIndex];
+    const pickup = new Date(pickupDate.value);
+    const dropoff = new Date(dropoffDate.value);
+    
+    if (selectedCar && selectedCar.value && pickupDate.value && dropoffDate.value && dropoff > pickup) {
+      const pricePerDay = parseFloat(selectedCar.dataset.price);
+      const days = Math.ceil((dropoff - pickup) / (1000 * 60 * 60 * 24));
+      const total = pricePerDay * days;
+      totalCostSpan.textContent = `$${total.toFixed(2)}`;
+      rentalPeriodSpan.textContent = `${days} day${days === 1 ? '' : 's'}`;
+    } else {
+      totalCostSpan.textContent = '$0';
+      rentalPeriodSpan.textContent = 'Select dates';
+    }
+  }
+  
+  carSelect.addEventListener('change', calculateTotal);
+  pickupDate.addEventListener('change', calculateTotal);
+  dropoffDate.addEventListener('change', calculateTotal);
+  
+  // Form validation
+  const form = document.getElementById('bookingForm');
+  form.addEventListener('submit', function(e) {
+    // Check if all required fields are filled
+    if (!pickupDate.value || !dropoffDate.value || !carSelect.value || !document.getElementById('location').value) {
+      e.preventDefault();
+      showErrorToast('Please fill in all required fields');
+      return false;
+    }
+    
+    const pickup = new Date(pickupDate.value);
+    const dropoff = new Date(dropoffDate.value);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    if (pickup < today) {
+      e.preventDefault();
+      showErrorToast('Pick-up date cannot be in the past');
+      return false;
+    }
+    
+    if (dropoff <= pickup) {
+      e.preventDefault();
+      showErrorToast('Drop-off date must be after pick-up date');
+      return false;
+    }
+    
+    // If all validations pass, show loading and allow submission
+    showLoading();
+  });
+});
+</script> 

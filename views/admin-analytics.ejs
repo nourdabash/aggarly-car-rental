@@ -1,0 +1,309 @@
+<% layout('layout') %>
+<section class="container py-5">
+  <div class="row">
+    <div class="col-12">
+      <!-- Header -->
+      <div class="d-flex justify-content-between align-items-center mb-5">
+        <div>
+          <h1 class="display-4 fw-bold mb-2">Analytics Dashboard</h1>
+          <p class="lead text-muted">Comprehensive insights into your car rental business</p>
+        </div>
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-outline-primary active" data-period="week">Week</button>
+          <button type="button" class="btn btn-outline-primary" data-period="month">Month</button>
+          <button type="button" class="btn btn-outline-primary" data-period="year">Year</button>
+        </div>
+      </div>
+
+      <!-- Key Metrics Cards -->
+      <div class="row g-4 mb-5">
+        <div class="col-lg-3 col-md-6">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div class="flex-shrink-0">
+                  <i class="bi bi-calendar-check text-primary fs-1"></i>
+                </div>
+                <div class="flex-grow-1 ms-3">
+                  <h6 class="card-title text-muted mb-1">Total Bookings</h6>
+                  <h3 class="mb-0 fw-bold"><%= totalBookings %></h3>
+                  <small class="text-success">
+                    <i class="bi bi-arrow-up"></i> +12% from last period
+                  </small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div class="flex-shrink-0">
+                  <i class="bi bi-currency-dollar text-success fs-1"></i>
+                </div>
+                <div class="flex-grow-1 ms-3">
+                  <h6 class="card-title text-muted mb-1">Revenue</h6>
+                  <h3 class="mb-0 fw-bold">$<%= totalRevenue.toLocaleString() %></h3>
+                  <small class="text-success">
+                    <i class="bi bi-arrow-up"></i> +8% from last period
+                  </small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div class="flex-shrink-0">
+                  <i class="bi bi-car-front text-info fs-1"></i>
+                </div>
+                <div class="flex-grow-1 ms-3">
+                  <h6 class="card-title text-muted mb-1">Active Rentals</h6>
+                  <h3 class="mb-0 fw-bold"><%= activeRentals %></h3>
+                  <small class="text-info">
+                    <i class="bi bi-arrow-up"></i> +5% from last period
+                  </small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div class="flex-shrink-0">
+                  <i class="bi bi-people text-warning fs-1"></i>
+                </div>
+                <div class="flex-grow-1 ms-3">
+                  <h6 class="card-title text-muted mb-1">Total Users</h6>
+                  <h3 class="mb-0 fw-bold"><%= totalUsers %></h3>
+                  <small class="text-success">
+                    <i class="bi bi-arrow-up"></i> +15% from last period
+                  </small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts Row -->
+      <div class="row g-4 mb-5">
+        <!-- Revenue Chart -->
+        <div class="col-lg-8">
+          <div class="card shadow-sm">
+            <div class="card-header bg-transparent">
+              <h5 class="mb-0">Revenue Trends</h5>
+            </div>
+            <div class="card-body">
+              <canvas id="revenueChart" height="300"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Popular Cars -->
+        <div class="col-lg-4">
+          <div class="card shadow-sm">
+            <div class="card-header bg-transparent">
+              <h5 class="mb-0">Most Popular Cars</h5>
+            </div>
+            <div class="card-body">
+              <div class="list-group list-group-flush">
+                <% popularCars.forEach(function(car) { %>
+                  <div class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                      <h6 class="mb-1"><%= car.brand %> <%= car.model %></h6>
+                      <small class="text-muted"><%= car.bookings %> bookings</small>
+                    </div>
+                    <span class="badge bg-primary rounded-pill"><%= car.revenue %>%</span>
+                  </div>
+                <% }); %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Detailed Analytics -->
+      <div class="row g-4">
+        <!-- Booking Analytics -->
+        <div class="col-lg-6">
+          <div class="card shadow-sm">
+            <div class="card-header bg-transparent">
+              <h5 class="mb-0">Booking Analytics</h5>
+            </div>
+            <div class="card-body">
+              <div class="row g-3">
+                <div class="col-6">
+                  <div class="text-center p-3 border rounded">
+                    <h4 class="text-primary mb-1"><%= confirmedBookings %></h4>
+                    <small class="text-muted">Confirmed</small>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="text-center p-3 border rounded">
+                    <h4 class="text-warning mb-1"><%= pendingBookings %></h4>
+                    <small class="text-muted">Pending</small>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="text-center p-3 border rounded">
+                    <h4 class="text-danger mb-1"><%= cancelledBookings %></h4>
+                    <small class="text-muted">Cancelled</small>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="text-center p-3 border rounded">
+                    <h4 class="text-success mb-1"><%= completedBookings %></h4>
+                    <small class="text-muted">Completed</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Location Analytics -->
+        <div class="col-lg-6">
+          <div class="card shadow-sm">
+            <div class="card-header bg-transparent">
+              <h5 class="mb-0">Top Locations</h5>
+            </div>
+            <div class="card-body">
+              <canvas id="locationChart" height="200"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Activity -->
+      <div class="row mt-5">
+        <div class="col-12">
+          <div class="card shadow-sm">
+            <div class="card-header bg-transparent">
+              <h5 class="mb-0">Recent Activity</h5>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>User</th>
+                      <th>Action</th>
+                      <th>Car</th>
+                      <th>Amount</th>
+                      <th>Date</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% recentActivity.forEach(function(activity) { %>
+                      <tr>
+                        <td>
+                          <div class="d-flex align-items-center">
+                            <div class="avatar-sm bg-primary rounded-circle d-flex align-items-center justify-content-center me-2">
+                              <span class="text-white fw-bold"><%= activity.user.charAt(0).toUpperCase() %></span>
+                            </div>
+                            <span><%= activity.user %></span>
+                          </div>
+                        </td>
+                        <td><%= activity.action %></td>
+                        <td><%= activity.car %></td>
+                        <td>$<%= activity.amount %></td>
+                        <td><%= new Date(activity.date).toLocaleDateString() %></td>
+                        <td>
+                          <span class="badge bg-<%= activity.status === 'confirmed' ? 'success' : activity.status === 'pending' ? 'warning' : 'danger' %>">
+                            <%= activity.status %>
+                          </span>
+                        </td>
+                      </tr>
+                    <% }); %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Revenue Chart
+  const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+  const revenueChart = new Chart(revenueCtx, {
+    type: 'line',
+    data: {
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+      datasets: [{
+        label: 'Revenue',
+        data: [12000, 19000, 15000, 25000, 22000, 30000],
+        borderColor: '#1976d2',
+        backgroundColor: 'rgba(25, 118, 210, 0.1)',
+        tension: 0.4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: false
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            callback: function(value) {
+              return '$' + value.toLocaleString();
+            }
+          }
+        }
+      }
+    }
+  });
+
+  // Location Chart
+  const locationCtx = document.getElementById('locationChart').getContext('2d');
+  const locationChart = new Chart(locationCtx, {
+    type: 'doughnut',
+    data: {
+      labels: ['London', 'Manchester', 'Birmingham', 'Liverpool'],
+      datasets: [{
+        data: [35, 25, 20, 20],
+        backgroundColor: ['#1976d2', '#388e3c', '#f57c00', '#d32f2f']
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'bottom'
+        }
+      }
+    }
+  });
+
+  // Period buttons
+  const periodButtons = document.querySelectorAll('[data-period]');
+  periodButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      periodButtons.forEach(btn => btn.classList.remove('active'));
+      this.classList.add('active');
+      // Here you would typically update the charts with new data
+    });
+  });
+});
+</script> 

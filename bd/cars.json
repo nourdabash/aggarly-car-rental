@@ -1,0 +1,192 @@
+[
+  {
+    "id": "car1",
+    "brand": "BMW",
+    "model": "X5",
+    "stock": 1,
+    "currentStock": 1,
+    "year": 2023,
+    "type": "SUV",
+    "fuel": "Petrol",
+    "transmission": "Automatic",
+    "location": "London",
+    "pricePerDay": 120,
+    "image": "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=600&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=600&q=80"
+    ],
+    "description": "Luxury SUV with premium features and excellent performance.",
+    "category": "Luxury"
+  },
+  {
+    "id": "car2",
+    "brand": "Mercedes-Benz",
+    "model": "C-Class",
+    "stock": 1,
+    "currentStock": 0,
+    "year": 2023,
+    "type": "Sedan",
+    "fuel": "Petrol",
+    "transmission": "Automatic",
+    "location": "Manchester",
+    "pricePerDay": 95,
+    "image": "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=600&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=600&q=80"
+    ],
+    "description": "Elegant sedan with sophisticated design and advanced technology.",
+    "category": "Luxury"
+  },
+  {
+    "id": "car3",
+    "brand": "Audi",
+    "model": "A4",
+    "stock": 1,
+    "currentStock": 1,
+    "year": 2023,
+    "type": "Sedan",
+    "fuel": "Petrol",
+    "transmission": "Automatic",
+    "location": "Birmingham",
+    "pricePerDay": 90,
+    "image": "/images/offer1.jpg",
+    "images": [
+      "/images/offer1.jpg"
+    ],
+    "description": "Premium sedan with quattro all-wheel drive and luxury amenities.",
+    "category": "Luxury"
+  },
+  {
+    "id": "car4",
+    "brand": "Volkswagen",
+    "model": "Golf",
+    "stock": 1,
+    "currentStock": 1,
+    "year": 2023,
+    "type": "Hatchback",
+    "fuel": "Petrol",
+    "transmission": "Manual",
+    "location": "Liverpool",
+    "pricePerDay": 45,
+    "image": "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=600&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=600&q=80"
+    ],
+    "description": "Reliable hatchback perfect for city driving and daily commutes.",
+    "category": "Economy"
+  },
+  {
+    "id": "car5",
+    "brand": "Toyota",
+    "model": "Camry",
+    "stock": 1,
+    "currentStock": 1,
+    "year": 2023,
+    "type": "Sedan",
+    "fuel": "Hybrid",
+    "transmission": "Automatic",
+    "location": "London",
+    "pricePerDay": 65,
+    "image": "/images/offer1.jpg",
+    "images": [
+      "/images/offer1.jpg"
+    ],
+    "description": "Fuel-efficient hybrid sedan with excellent reliability.",
+    "category": "Economy"
+  },
+  {
+    "id": "car6",
+    "brand": "Honda",
+    "model": "CR-V",
+    "stock": 1,
+    "currentStock": 1,
+    "year": 2023,
+    "type": "SUV",
+    "fuel": "Petrol",
+    "transmission": "Automatic",
+    "location": "Manchester",
+    "pricePerDay": 75,
+    "image": "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=600&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=600&q=80"
+    ],
+    "description": "Spacious SUV with excellent safety ratings and fuel efficiency.",
+    "category": "SUV"
+  },
+  {
+    "id": "car7",
+    "brand": "Ford",
+    "model": "Focus",
+    "stock": 1,
+    "currentStock": 1,
+    "year": 2023,
+    "type": "Hatchback",
+    "fuel": "Petrol",
+    "transmission": "Manual",
+    "location": "Birmingham",
+    "pricePerDay": 40,
+    "image": "/images/offer1.jpg",
+    "images": [
+      "/images/offer1.jpg"
+    ],
+    "description": "Compact hatchback with great handling and fuel economy.",
+    "category": "Economy"
+  },
+  {
+    "id": "car8",
+    "brand": "Nissan",
+    "model": "Qashqai",
+    "stock": 1,
+    "currentStock": 1,
+    "year": 2023,
+    "type": "SUV",
+    "fuel": "Petrol",
+    "transmission": "Automatic",
+    "location": "Liverpool",
+    "pricePerDay": 70,
+    "image": "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=600&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=600&q=80"
+    ],
+    "description": "Popular crossover SUV with modern design and practicality.",
+    "category": "SUV"
+  },
+  {
+    "id": "car9",
+    "brand": "Hyundai",
+    "model": "Tucson",
+    "stock": 1,
+    "currentStock": 0,
+    "year": 2023,
+    "type": "SUV",
+    "fuel": "Petrol",
+    "transmission": "Automatic",
+    "location": "London",
+    "pricePerDay": 65,
+    "image": "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=600&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=600&q=80"
+    ],
+    "description": "Stylish SUV with excellent warranty and modern features.",
+    "category": "SUV"
+  },
+  {
+    "id": "car10",
+    "brand": "Kia",
+    "model": "Sportage",
+    "stock": 1,
+    "currentStock": 1,
+    "year": 2023,
+    "type": "SUV",
+    "fuel": "Petrol",
+    "transmission": "Automatic",
+    "location": "Manchester",
+    "pricePerDay": 60,
+    "image": "/images/offer1.jpg",
+    "images": [
+      "/images/offer1.jpg"
+    ],
+    "description": "Well-equipped SUV with great value for money.",
+    "category": "SUV"
+  }
+]

@@ -1,0 +1,28 @@
+<% layout('layout') %>
+<section class="container py-5">
+  <h2 class="section-title fs-3 fw-bold mb-4">My Bookings</h2>
+  <div class="row g-4">
+    <% if (bookings.length === 0) { %>
+      <div class="col-12 text-center text-muted">No bookings found.</div>
+    <% } %>
+    <% bookings.forEach(b => { %>
+      <div class="col-md-6">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title fw-bold">
+              <% if (b.car) { %>
+                <%= b.car.brand %> <%= b.car.model %>
+              <% } else { %>
+                [Car not found]
+              <% } %>
+            </h5>
+            <div class="mb-2 small text-muted">Pick-up: <%= b.pickupDate %> | Drop-off: <%= b.dropoffDate %></div>
+            <div class="mb-2">Location: <%= b.location %></div>
+            <div class="mb-2">Status: <span class="badge bg-success"><%= b.status %></span></div>
+            <div class="mb-2">Booked on: <%= new Date(b.createdAt).toLocaleString() %></div>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+</section> 

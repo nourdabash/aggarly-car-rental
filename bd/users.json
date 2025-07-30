@@ -1,0 +1,18 @@
+[
+  {
+    "id": "1753359653978",
+    "name": "nour",
+    "email": "nrdabash@gmail.com",
+    "password": "$2b$10$gQrU3H5AoHJbqap26r/W7..hD5X4bu9xyEwRjh3AuQ1JkdCDVYxX2",
+    "role": "customer",
+    "createdAt": "2025-07-24T12:20:53.978Z"
+  },
+  {
+    "id": "admin-1",
+    "name": "Admin User",
+    "email": "admin@example.com",
+    "password": "$2b$10$.s093CT4f1QLsaEU6xxSFeGib0wTzNMxjVH2UwU05JpgkI361O2sK",
+    "role": "admin",
+    "createdAt": "2025-07-24T12:20:53.978Z"
+  }
+]

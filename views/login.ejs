@@ -1,0 +1,38 @@
+<% layout('layout') %>
+<section class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="bg-white rounded shadow-sm p-4">
+        <h1 class="section-title fs-2 fw-bold mb-4">Login</h1>
+        <% if (error) { %>
+          <div class="alert alert-danger"><%= error %></div>
+        <% } %>
+        <% if (message) { %>
+          <div class="alert alert-info"><%= message %></div>
+        <% } %>
+        <form method="post" action="/auth/login">
+          <% if (typeof req !== 'undefined' && req.query && req.query.next) { %>
+            <input type="hidden" name="next" value="<%= req.query.next %>">
+          <% } %>
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" name="email" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Password</label>
+            <input type="password" name="password" class="form-control" required>
+          </div>
+          <div class="d-grid mb-3">
+            <button class="btn btn-primary fw-bold">Login</button>
+          </div>
+        </form>
+        <div class="text-center">
+          <span>Don't have an account? <a href="/auth/register">Register</a></span>
+        </div>
+        <div class="text-center mt-3">
+          <span>Are you an admin? <a href="/admin" class="fw-bold">Log in here</a>.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> 
