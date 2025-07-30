@@ -1,6 +1,6 @@
 {
   "install": "npm install",
-  "start": "npm start",
+  "start": "node app.js",
   "watch": {
     "ignore": [
       "^\\..*",
